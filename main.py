@@ -1,25 +1,28 @@
 import sys
 
-dic = ['d','e', 'h', 'i', 'j','l','o','w', '<' , '=', '+', ';', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+dicionario = ['d', 'e', 'h', 'i', 'j', 'l', 'o', 'w', '<', '=',
+              '+', ';', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
 reservadas = ['while', 'do']
 operadores = ['<', '=', '+']
 terminadores = [';']
-identificadores = ['i','j']
+identificadores = ['i', 'j']
 numeros = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
 
 tokens = []
 simbolos = []
 
+
 def verificaToken(token, inicio):
-    eNumero = True
+    eh_numero = True
     for i in token:
         if not i in numeros:
-            eNumero = False
+            eh_numero = False
 
-    if eNumero:
+    if eh_numero:
         if not token in simbolos:
             simbolos.append(token)
-        tokens.append([token, ['constante', simbolos.index(token)], len(token), inicio])
+        tokens.append(
+            [token, ['constante', simbolos.index(token) + 1], len(token), inicio])
     elif token in reservadas:
         tokens.append([token, 'palavra reservada', len(token), inicio])
     elif token in operadores:
@@ -29,16 +32,18 @@ def verificaToken(token, inicio):
     elif token in identificadores:
         if not token in simbolos:
             simbolos.append(token)
-        tokens.append([token, ['identificador', simbolos.index(token)], len(token), inicio])
+        tokens.append(
+            [token, ['identificador', simbolos.index(token) + 1], len(token), inicio])
     else:
-        print(f'Simbolo "{token}" não reconhecido. Ln {inicio[0]}, Col {inicio[1]}')
+        print(
+            f'Simbolo "{token}" não reconhecido. Linha {inicio[0]}, Coluna {inicio[1]}')
         return False
     return True
 
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
-        print("Usage: python comp.py <input_file>")
+        print("Usage: python main.py <input_file>")
         sys.exit(1)
 
     file = sys.argv[1]
@@ -46,37 +51,38 @@ if __name__ == '__main__':
     with open(file, 'r') as f:
         code = f.read().split('\n')
 
-    col = 0
+    coluna = 0
     token = ''
     stop = False
 
-    for ln in range(len(code)):
+    for linha in range(len(code)):
         if stop:
             break
-        for col in range(len(code[ln])):
-            if code[ln][col] != ' ' and not code[ln][col] in dic:
+        for coluna in range(len(code[linha])):
+            if code[linha][coluna] != ' ' and not code[linha][coluna] in dicionario:
                 '''
                 Verifica se o caractere não é espaço vazio e se está presente no dicionário
                 '''
 
-                print(f"'{code[ln][col]}' não está presente no dicionário. Ln {ln}, Col {col}")
+                print(
+                    f"'{code[linha][coluna]}' não está presente no dicionário. Ln {linha}, Col {coluna}")
                 stop = True
                 break
 
-            elif code[ln][col] in terminadores:
+            elif code[linha][coluna] in terminadores:
                 '''
                 Verifica se o caractere é um terminador
                 '''
 
-                stop = not verificaToken(token, (ln, col-len(token)))
-                stop = not verificaToken(code[ln][col], (ln, col))
+                stop = not verificaToken(token, (linha, coluna-len(token)))
+                stop = not verificaToken(code[linha][coluna], (linha, coluna))
                 token = ''
 
-            elif code[ln][col] != ' ':
-                token += code[ln][col]
+            elif code[linha][coluna] != ' ':
+                token += code[linha][coluna]
 
             else:
-                stop = not verificaToken(token, (ln, col-len(token)))
+                stop = not verificaToken(token, (linha, coluna-len(token)))
                 token = ''
 
     if not stop:
@@ -86,11 +92,12 @@ if __name__ == '__main__':
             saida.write('| :----: | :-----------: | :------: | :------: |\n')
 
             for token in tokens:
-                saida.write(f'| {token[0]} | {token[1]} | {token[2]} | {token[3]} |\n')
+                saida.write(
+                    f'| {token[0]} | {token[1]} | {token[2]} | {token[3]} |\n')
 
             saida.write('\n<br/>\n\n')
 
-            saida.write('# Tabela de Tokens\n')
+            saida.write('# Tabela de símbolos\n')
             saida.write('\n| Índice | Símbolo |\n')
             saida.write('| :----: | :-----------: |\n')
 
