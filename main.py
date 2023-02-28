@@ -12,32 +12,34 @@ tokens = []
 simbolos = []
 
 
-def verificaToken(token, inicio):
+def verificaToken(token: str, inicio):
     eh_numero = True
     for i in token:
         if not i in numeros:
             eh_numero = False
-
-    if eh_numero:
-        if not token in simbolos:
-            simbolos.append(token)
-        tokens.append(
-            [token, ['constante', simbolos.index(token) + 1], len(token), inicio])
-    elif token in reservadas:
-        tokens.append([token, 'palavra reservada', len(token), inicio])
-    elif token in operadores:
-        tokens.append([token, 'operador', len(token), inicio])
-    elif token in terminadores:
-        tokens.append([token, 'terminador', len(token), inicio])
-    elif token in identificadores:
-        if not token in simbolos:
-            simbolos.append(token)
-        tokens.append(
-            [token, ['identificador', simbolos.index(token) + 1], len(token), inicio])
-    else:
-        print(
-            f'Simbolo "{token}" não reconhecido. Linha {inicio[0]}, Coluna {inicio[1]}')
-        return False
+    
+    
+    if not token == '':
+        if eh_numero:
+            if not token in simbolos:
+                simbolos.append(token)
+            tokens.append(
+                [token, ['constante', simbolos.index(token) + 1], len(token), inicio])
+        elif token in reservadas:
+            tokens.append([token, 'palavra reservada', len(token), inicio])
+        elif token in operadores:
+            tokens.append([token, 'operador', len(token), inicio])
+        elif token in terminadores:
+            tokens.append([token, 'terminador', len(token), inicio])
+        elif token in identificadores:
+            if not token in simbolos:
+                simbolos.append(token)
+            tokens.append(
+                [token, ['identificador', simbolos.index(token) + 1], len(token), inicio])
+        else:
+            print(
+                f'Simbolo "{token}" não reconhecido. Linha {inicio[0]}, Coluna {inicio[1]}')
+            return False
     return True
 
 
