@@ -1,7 +1,1 @@
-<<<<<<< HEAD
 while i < 100 do i = i + j;
-=======
-;while        i < 100 do i = i + j;
-i < 100;
-7 + j
->>>>>>> 05e670387012cb5d19bcf8fe69cbfb38b5b2c98b
