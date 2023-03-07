@@ -1,4 +1,5 @@
 import sys
+import json
 
 dicionario = ['d', 'e', 'h', 'i', 'j', 'l', 'o', 'w', '<', '=',
               '+', ';', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
@@ -12,38 +13,47 @@ tokens = []
 simbolos = []
 
 
-def verificaToken(token, inicio):
+def verificaToken(token: str, inicio):
     eh_numero = True
     for i in token:
         if not i in numeros:
             eh_numero = False
-
-    if eh_numero:
-        if not token in simbolos:
-            simbolos.append(token)
-        tokens.append(
-            [token, ['constante', simbolos.index(token) + 1], len(token), inicio])
-    elif token in reservadas:
-        tokens.append([token, 'palavra reservada', len(token), inicio])
-    elif token in operadores:
-        tokens.append([token, 'operador', len(token), inicio])
-    elif token in terminadores:
-        tokens.append([token, 'terminador', len(token), inicio])
-    elif token in identificadores:
-        if not token in simbolos:
-            simbolos.append(token)
-        tokens.append(
-            [token, ['identificador', simbolos.index(token) + 1], len(token), inicio])
-    else:
-        print(
-            f'Simbolo "{token}" não reconhecido. Linha {inicio[0]}, Coluna {inicio[1]}')
-        return False
+    
+    
+    if not token == '':
+        if eh_numero:
+            if not token in simbolos:
+                simbolos.append(token)
+            tokens.append(
+                [token, ['constante', simbolos.index(token) + 1], len(token), inicio])
+        elif token in reservadas:
+            tokens.append([token, 'palavra reservada', len(token), inicio])
+        elif token in operadores:
+            tokens.append([token, 'operador', len(token), inicio])
+        elif token in terminadores:
+            tokens.append([token, 'terminador', len(token), inicio])
+        elif token in identificadores:
+            if not token in simbolos:
+                simbolos.append(token)
+            tokens.append(
+                [token, ['identificador', simbolos.index(token) + 1], len(token), inicio])
+        else:
+            print(
+                f'Simbolo "{token}" não reconhecido. Linha {inicio[0]}, Coluna {inicio[1]}')
+            return False
     return True
+
+def tokensParaJson():
+    listJson = []
+    for token in tokens:
+        listJson.append({"token": token[0], "identificacao": token[1], "tamanho": token[2], "posicao": token[3]})
+
+    return listJson
 
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
-        print("Usage: python main.py <input_file>")
+        print("Usage: python analisador_lexico.py <input_file>")
         sys.exit(1)
 
     file = sys.argv[1]
@@ -86,20 +96,8 @@ if __name__ == '__main__':
                 token = ''
 
     if not stop:
-        with open('saida.md', 'w', encoding='utf-8') as saida:
-            saida.write('# Tabela de Tokens\n')
-            saida.write('| Token | Identificação | Tamanho | Posição |\n')
-            saida.write('| :----: | :-----------: | :------: | :------: |\n')
+        tokensJson = tokensParaJson()
 
-            for token in tokens:
-                saida.write(
-                    f'| {token[0]} | {token[1]} | {token[2]} | {token[3]} |\n')
-
-            saida.write('\n<br/>\n\n')
-
-            saida.write('# Tabela de símbolos\n')
-            saida.write('\n| Índice | Símbolo |\n')
-            saida.write('| :----: | :-----------: |\n')
-
-            for simbolo in simbolos:
-                saida.write(f'| {(simbolos.index(simbolo)+1)} | {simbolo} |\n')
+        jsonFinal = {"tokens": tokensJson, "simbolos": simbolos}
+        with open('tabelas.json', 'w', encoding='utf-8') as f:
+            json.dump(jsonFinal, f, ensure_ascii=False, indent=2)

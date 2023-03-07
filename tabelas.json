@@ -1,0 +1,123 @@
+{
+  "tokens": [
+    {
+      "token": "while",
+      "identificacao": "palavra reservada",
+      "tamanho": 5,
+      "posicao": [
+        0,
+        0
+      ]
+    },
+    {
+      "token": "i",
+      "identificacao": [
+        "identificador",
+        1
+      ],
+      "tamanho": 1,
+      "posicao": [
+        0,
+        6
+      ]
+    },
+    {
+      "token": "<",
+      "identificacao": "operador",
+      "tamanho": 1,
+      "posicao": [
+        0,
+        8
+      ]
+    },
+    {
+      "token": "100",
+      "identificacao": [
+        "constante",
+        2
+      ],
+      "tamanho": 3,
+      "posicao": [
+        0,
+        10
+      ]
+    },
+    {
+      "token": "do",
+      "identificacao": "palavra reservada",
+      "tamanho": 2,
+      "posicao": [
+        0,
+        14
+      ]
+    },
+    {
+      "token": "i",
+      "identificacao": [
+        "identificador",
+        1
+      ],
+      "tamanho": 1,
+      "posicao": [
+        0,
+        17
+      ]
+    },
+    {
+      "token": "=",
+      "identificacao": "operador",
+      "tamanho": 1,
+      "posicao": [
+        0,
+        19
+      ]
+    },
+    {
+      "token": "i",
+      "identificacao": [
+        "identificador",
+        1
+      ],
+      "tamanho": 1,
+      "posicao": [
+        0,
+        21
+      ]
+    },
+    {
+      "token": "+",
+      "identificacao": "operador",
+      "tamanho": 1,
+      "posicao": [
+        0,
+        23
+      ]
+    },
+    {
+      "token": "j",
+      "identificacao": [
+        "identificador",
+        3
+      ],
+      "tamanho": 1,
+      "posicao": [
+        0,
+        25
+      ]
+    },
+    {
+      "token": ";",
+      "identificacao": "terminador",
+      "tamanho": 1,
+      "posicao": [
+        0,
+        26
+      ]
+    }
+  ],
+  "simbolos": [
+    "i",
+    "100",
+    "j"
+  ]
+}
