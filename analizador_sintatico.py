@@ -19,4 +19,4 @@ with open('tabelas.json', 'r') as tabelas:
     simbolos = tabelas["simbolos"]
 
     verifica_while(tokens, simbolos)
-    print('Verificação finalizada :)')
+    print('Verificação finalizada com sucesso :)')
